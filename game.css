@@ -1,0 +1,119 @@
+body {
+    background: whitesmoke;
+}
+
+a {
+    text-decoration: none;
+    color: dodgerblue;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+}
+
+.navbar {
+    padding: 0.5rem 1rem 0.8rem;
+    display: flex;
+    box-shadow: 0 2px 2px silver;
+    background: white;
+}
+
+.navbar-item {
+    display: inline-block;
+    width: calc(100% / 3);
+}
+
+.navbar-item a {
+    vertical-align: middle;
+}
+
+.navbar-item-left {
+    text-align: left;
+}
+
+.navbar-item-center {
+    text-align: center;
+}
+
+.navbar-item-right {
+    text-align: right;
+}
+
+.arrow {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    width: 24px;
+}
+
+.arrow::before,
+.arrow::after{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    content: "";
+}
+
+.arrow::before{
+    width: 24px;
+    height: 7px;
+    background: gray;
+}
+
+.arrow::after{
+    width: 16px;
+    height: 16px;
+    border-top: 6px solid gray;
+    border-right: 6px solid gray;
+}
+
+.arrow-left::after{
+    transform: rotate(-135deg);
+}
+
+.arrow-right::after{
+    transform: rotate(45deg);
+}
+
+.game-header {
+    text-align: center;
+}
+
+.game-header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.game-container {
+    max-width: 640px;
+    margin: auto;
+}
+
+.game-container iframe {
+    width: 100%;
+    background: black;
+}
+
+.game-header,
+.game-container,
+.description-container,
+.link-container {
+    margin-top: 2rem;
+}
+
+.description {
+    background: white;
+    padding: 1rem 2rem;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    text-align: justify;
+}
+
+.footer {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}

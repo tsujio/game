@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tsujio Game Labo.</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="./index.css">
+    <script src="./index.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Tsujio Game Labo.</h1>
+      </div>
+      <div class="games-container" id="games-container">
+      </div>
+      <div class="footer">
+        <p>&copy; <a href="https://www.tsujio.org">辻尾研</a></p>
+      </div>
+    </div>
+  </body>
+
+  <template id="game-container-template">
+    <div class="game-container">
+      <h1 class="game-title"></h1>
+      <a class="game-link" href="#"><img class="game-image" /></a>
+      <p class="game-description"></p>
+    </div>
+  </template>
+</html>

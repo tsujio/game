@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<script src="https://storage.googleapis.com/tsujio-game-serve/wasm_exec.js"></script>
+<script>
+// Polyfill
+if (!WebAssembly.instantiateStreaming) {
+  WebAssembly.instantiateStreaming = async (resp, importObject) => {
+    const source = await (await resp).arrayBuffer();
+    return await WebAssembly.instantiate(source, importObject);
+  };
+}
+
+const param = (() => {
+  let query = Object.fromEntries(location.search.substr(1,).split('&').map((kv) => kv.split('=')))
+
+  let param = {}
+
+  if (typeof query.title !== "string" || !query.title.match(/^[\w-]+$/)) {
+    throw new Error("title not found")
+  }
+  param.title = query.title
+
+  if (String(query.version).match(/^\d+$/)) {
+    param.version = ".v" + query.version
+  } else {
+    param.version = ""
+  }
+
+  if (String(query.compress).match(/^(gz)$/)) {
+    param.compress = "." + query.compress
+  } else {
+    param.compress = ""
+  }
+
+  param.logging = String(query.logging) === "true"
+
+  return param
+})()
+
+const go = new Go();
+const url = `https://storage.googleapis.com/tsujio-game-serve/${param.title}/${param.title}${param.version}.wasm${param.compress}`
+WebAssembly.instantiateStreaming(fetch(url), go.importObject).then(result => {
+  if (param.logging) {
+    go.env["GAME_LOGGING"] = "1"
+  }
+  go.run(result.instance);
+});
+</script>
