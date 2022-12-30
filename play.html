@@ -36,11 +36,26 @@ const param = (() => {
   return param
 })()
 
+const getPlayerId = () => {
+  let playerId = localStorage.getItem("PLAYER_ID")
+  if (!playerId) {
+    playerId = crypto.randomUUID()
+    localStorage.setItem("PLAYER_ID", playerId)
+  }
+  return playerId
+}
+
 const go = new Go();
 const url = `https://storage.googleapis.com/tsujio-game-serve/${param.title}/${param.title}${param.version}.wasm${param.compress}`
 WebAssembly.instantiateStreaming(fetch(url), go.importObject).then(result => {
   if (param.logging) {
     go.env["GAME_LOGGING"] = "1"
+  }
+  try {
+    const playerId = getPlayerId()
+    go.env["GAME_PLAYER_ID"] = playerId
+  } catch (e) {
+    console.warn(e)
   }
   go.run(result.instance);
 });
