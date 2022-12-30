@@ -2,31 +2,31 @@
   "games": [
     {
       "title": "Birdman Challenge",
-      "link": "https:\/\/www.tsujio.org\/games\/game.html?title=birdman",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=birdman",
       "image": "https:\/\/github.com\/tsujio\/game-birdman\/blob\/main\/image.gif?raw=true",
       "description": "鳥人間コンテストを題材にしたゲームです。"
     },
     {
       "title": "Maxwell's Demon",
-      "link": "https:\/\/www.tsujio.org\/games\/game.html?title=maxwells-demon",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=maxwells-demon",
       "image": "https:\/\/github.com\/tsujio\/game-maxwells-demon\/blob\/main\/image.gif?raw=true",
       "description": "マクスウェルの悪魔を題材にしたゲームです。"
     },
     {
       "title": "Spotted Garden Eel",
-      "link": "https:\/\/www.tsujio.org\/games\/game.html?title=spotted-garden-eel",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=spotted-garden-eel",
       "image": "https:\/\/github.com\/tsujio\/game-spotted-garden-eel\/blob\/main\/image.gif?raw=true",
       "description": "チンアナゴを題材にしたゲームです。"
     },
     {
       "title": "Cosmic Velocity",
-      "link": "https:\/\/www.tsujio.org\/games\/game.html?title=cosmic-velocity",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=cosmic-velocity",
       "image": "https:\/\/github.com\/tsujio\/game-cosmic-velocity\/blob\/main\/image.gif?raw=true",
       "description": "宇宙速度を題材にしたゲームです。"
     },
     {
       "title": "Wave Interference",
-      "link": "https:\/\/www.tsujio.org\/games\/game.html?title=wave-interference",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=wave-interference",
       "image": "https:\/\/github.com\/tsujio\/game-wave-interference\/blob\/main\/image.gif?raw=true",
       "description": "波の干渉を題材にしたゲームです。"
     }

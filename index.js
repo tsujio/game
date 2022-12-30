@@ -1,6 +1,6 @@
 (() => {
   window.onload = () => {
-    fetch("https://www.tsujio.org/games/games.json")
+    fetch("/games.json")
       .then((res) => res.json())
       .then((data) => {
         const tmpl = document.querySelector("#game-container-template").content
