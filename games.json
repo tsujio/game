@@ -29,6 +29,12 @@
       "link": "https:\/\/game.tsujio.org\/game.html?title=wave-interference",
       "image": "https:\/\/github.com\/tsujio\/game-wave-interference\/blob\/main\/image.gif?raw=true",
       "description": "波の干渉を題材にしたゲームです。"
+    },
+    {
+      "title": "Archerfish",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=archerfish",
+      "image": "https:\/\/github.com\/tsujio\/game-archerfish\/blob\/main\/image.gif?raw=true",
+      "description": "テッポウウオを題材にしたゲームです。"
     }
   ]
 }
