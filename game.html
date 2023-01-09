@@ -13,7 +13,7 @@
           <a id="link-prev" href="#"><span class="arrow arrow-left"></span></a>
         </div>
         <div class="navbar-item navbar-item-center">
-          <a href="https://game.tsujio.org">All Games</a>
+          <a id="link-home" href="https://game.tsujio.org">All Games</a>
         </div>
         <div class="navbar-item navbar-item-right">
           <a id="link-next" href="#"><span class="arrow arrow-right"></span></a>
@@ -50,6 +50,12 @@
 
       const logging = query.logging === "false" ? "false" : "true"
 
+      const makeUrlWithLoggingParam = (url) => {
+        const u = new URL(url)
+        u.searchParams.set("logging", logging)
+        return u.toString()
+      }
+
       fetch(`https://www.tsujio.org/game-${query.title}/info.json`)
         .then((res) => res.json())
         .then((info) => {
@@ -73,6 +79,9 @@
           resize()
         })
 
+      const homeLink = document.querySelector("#link-home")
+      homeLink.href = makeUrlWithLoggingParam(homeLink.href)
+
       fetch("https://game.tsujio.org/games.json")
         .then((res) => res.json())
         .then((data) => {
@@ -85,13 +94,13 @@
               if (i === 0) {
                 prev.style.display = "none"
               } else {
-                prev.href = data.games[i - 1].link + `&logging=${logging}`
+                prev.href = makeUrlWithLoggingParam(data.games[i - 1].link)
               }
 
               if (i === data.games.length - 1) {
                 next.style.display = "none"
               } else {
-                next.href = data.games[i + 1].link + `&logging=${logging}`
+                next.href = makeUrlWithLoggingParam(data.games[i + 1].link)
               }
 
               break
