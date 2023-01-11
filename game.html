@@ -72,7 +72,7 @@
 
           const resize = () => {
             const iframe = document.querySelector("#game-screen")
-            iframe.style.height = (iframe.clientWidth * info.screen.height / info.screen.width) + "px"
+            iframe.style.height = Math.min(iframe.clientWidth * info.screen.height / info.screen.width, window.innerHeight) + "px"
           }
 
           window.onresize = resize
