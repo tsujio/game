@@ -36,11 +36,17 @@
       "image": "https:\/\/github.com\/tsujio\/game-archerfish\/blob\/main\/image.gif?raw=true",
       "description": "テッポウウオを題材にしたゲームです。"
     },
-        {
+    {
       "title": "Four Color Theorem",
       "link": "https:\/\/game.tsujio.org\/game.html?title=four-color-theorem",
       "image": "https:\/\/github.com\/tsujio\/game-four-color-theorem\/blob\/main\/image.gif?raw=true",
       "description": "四色定理を題材にしたゲームです。"
+    },
+    {
+      "title": "Fractal",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=fractal",
+      "image": "https:\/\/github.com\/tsujio\/game-fractal\/blob\/main\/image.gif?raw=true",
+      "description": "フラクタルを題材にしたゲームです。"
     }
   ]
 }
