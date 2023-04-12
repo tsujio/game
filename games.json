@@ -47,6 +47,12 @@
       "link": "https:\/\/game.tsujio.org\/game.html?title=fractal",
       "image": "https:\/\/github.com\/tsujio\/game-fractal\/blob\/main\/image.gif?raw=true",
       "description": "フラクタルを題材にしたゲームです。"
+    },
+    {
+      "title": "Foucault Pendulum",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=foucault-pendulum",
+      "image": "https:\/\/github.com\/tsujio\/game-foucault-pendulum\/blob\/main\/image.gif?raw=true",
+      "description": "フーコーの振り子を題材にしたゲームです。"
     }
   ]
 }
