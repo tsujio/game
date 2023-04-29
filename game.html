@@ -23,7 +23,7 @@
         <h1 id="game-title"></h1>
       </div>
       <div class="game-container">
-        <iframe id="game-screen" allow="autoplay"></iframe>
+        <iframe id="game-screen" allow="autoplay" height="480px"></iframe>
       </div>
       <div class="description-container">
         <div id="game-description" class="description">
@@ -50,6 +50,9 @@
 
       const logging = query.logging === "false" ? "false" : "true"
 
+      const iframe = document.querySelector("#game-screen")
+      iframe.src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
+
       const makeUrlWithLoggingParam = (url) => {
         const u = new URL(url)
         u.searchParams.set("logging", logging)
@@ -61,7 +64,6 @@
         .then((info) => {
           document.title = info.title
           document.querySelector("#game-title").textContent = `${info.title} (${info.year})`
-          document.querySelector("#game-screen").src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
           const description = document.querySelector("#game-description")
           for (const d of info.description) {
             const p = document.createElement("p")
@@ -71,7 +73,6 @@
           document.querySelector("#game-source").href = `https://github.com/tsujio/game-${query.title}`
 
           const resize = () => {
-            const iframe = document.querySelector("#game-screen")
             iframe.style.height = Math.min(iframe.clientWidth * info.screen.height / info.screen.width, window.innerHeight) + "px"
           }
 
