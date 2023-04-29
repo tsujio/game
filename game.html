@@ -53,6 +53,13 @@
       const iframe = document.querySelector("#game-screen")
       iframe.src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
 
+      let screenAspectRatio = 4 / 3
+      const resize = () => {
+        iframe.style.height = Math.min(iframe.clientWidth / screenAspectRatio, window.innerHeight) + "px"
+      }
+      window.onresize = resize
+      resize()
+
       const makeUrlWithLoggingParam = (url) => {
         const u = new URL(url)
         u.searchParams.set("logging", logging)
@@ -71,12 +78,7 @@
             description.appendChild(p)
           }
           document.querySelector("#game-source").href = `https://github.com/tsujio/game-${query.title}`
-
-          const resize = () => {
-            iframe.style.height = Math.min(iframe.clientWidth * info.screen.height / info.screen.width, window.innerHeight) + "px"
-          }
-
-          window.onresize = resize
+          screenAspectRatio = info.screen.width / info.screen.height
           resize()
         })
 
