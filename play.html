@@ -1,62 +1,90 @@
 <!DOCTYPE html>
-<script src="https://storage.googleapis.com/tsujio-game-serve/wasm_exec.js"></script>
-<script>
-// Polyfill
-if (!WebAssembly.instantiateStreaming) {
-  WebAssembly.instantiateStreaming = async (resp, importObject) => {
-    const source = await (await resp).arrayBuffer();
-    return await WebAssembly.instantiate(source, importObject);
-  };
-}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      body {
+          display: flex;
+      }
 
-const param = (() => {
-  let query = Object.fromEntries(location.search.substr(1,).split('&').map((kv) => kv.split('=')))
+      #loading {
+          width: 100%;
+          text-align: center;
+          color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://storage.googleapis.com/tsujio-game-serve/wasm_exec.js"></script>
+    <script>
+      window.onload = () => {
+        // Polyfill
+        if (!WebAssembly.instantiateStreaming) {
+          WebAssembly.instantiateStreaming = async (resp, importObject) => {
+            const source = await (await resp).arrayBuffer();
+            return await WebAssembly.instantiate(source, importObject);
+          };
+        }
 
-  let param = {}
+        const param = (() => {
+          let query = Object.fromEntries(location.search.substr(1,).split('&').map((kv) => kv.split('=')))
 
-  if (typeof query.title !== "string" || !query.title.match(/^[\w-]+$/)) {
-    throw new Error("title not found")
-  }
-  param.title = query.title
+          let param = {}
 
-  if (String(query.version).match(/^\d+$/)) {
-    param.version = ".v" + query.version
-  } else {
-    param.version = ""
-  }
+          if (typeof query.title !== "string" || !query.title.match(/^[\w-]+$/)) {
+            throw new Error("title not found")
+          }
+          param.title = query.title
 
-  if (String(query.compress).match(/^(gz)$/)) {
-    param.compress = "." + query.compress
-  } else {
-    param.compress = ""
-  }
+          if (String(query.version).match(/^\d+$/)) {
+            param.version = ".v" + query.version
+          } else {
+            param.version = ""
+          }
 
-  param.logging = String(query.logging) === "true"
+          if (String(query.compress).match(/^(gz)$/)) {
+            param.compress = "." + query.compress
+          } else {
+            param.compress = ""
+          }
 
-  return param
-})()
+          param.logging = String(query.logging) === "true"
 
-const getPlayerId = () => {
-  let playerId = localStorage.getItem("PLAYER_ID")
-  if (!playerId) {
-    playerId = crypto.randomUUID()
-    localStorage.setItem("PLAYER_ID", playerId)
-  }
-  return playerId
-}
+          return param
+        })()
 
-const go = new Go();
-const url = `https://storage.googleapis.com/tsujio-game-serve/${param.title}/${param.title}${param.version}.wasm${param.compress}`
-WebAssembly.instantiateStreaming(fetch(url), go.importObject).then(result => {
-  if (param.logging) {
-    go.env["GAME_LOGGING"] = "1"
-  }
-  try {
-    const playerId = getPlayerId()
-    go.env["GAME_PLAYER_ID"] = playerId
-  } catch (e) {
-    console.warn(e)
-  }
-  go.run(result.instance);
-});
-</script>
+        const getPlayerId = () => {
+          let playerId = localStorage.getItem("PLAYER_ID")
+          if (!playerId) {
+            playerId = crypto.randomUUID()
+            localStorage.setItem("PLAYER_ID", playerId)
+          }
+          return playerId
+        }
+
+        const go = new Go();
+        const url = `https://storage.googleapis.com/tsujio-game-serve/${param.title}/${param.title}${param.version}.wasm${param.compress}`
+        WebAssembly.instantiateStreaming(fetch(url), go.importObject).then(result => {
+          if (param.logging) {
+            go.env["GAME_LOGGING"] = "1"
+          }
+          try {
+            const playerId = getPlayerId()
+            go.env["GAME_PLAYER_ID"] = playerId
+          } catch (e) {
+            console.warn(e)
+          }
+
+          document.querySelector("#loading").remove()
+
+          go.run(result.instance);
+        }).catch(e => {
+          console.error(e)
+          document.querySelector("#loading").textContent = "Error"
+        });
+      }
+    </script>
+
+    <p id="loading">Loading...</p>
+  </body>
+</html>
