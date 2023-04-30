@@ -9,7 +9,6 @@
           margin: 0px;
           padding: 0px;
           display: flex;
-          height: 100vh;
       }
 
       iframe {
@@ -35,6 +34,12 @@
 
       const iframe = document.querySelector("#game-screen")
       iframe.src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
+
+      const resize = () => {
+        document.body.style.height = (window.innerHeight - 1) + "px"
+      }
+      window.onresize = resize
+      resize()
 
       fetch(`https://www.tsujio.org/game-${query.title}/info.json`)
         .then((res) => res.json())
