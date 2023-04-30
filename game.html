@@ -23,6 +23,7 @@
         <h1 id="game-title"></h1>
       </div>
       <div class="game-container">
+        <p id="game-fullscreen"><a href="#">Fullscreen</a></p>
         <iframe id="game-screen" allow="autoplay"></iframe>
       </div>
       <div class="description-container">
@@ -52,6 +53,9 @@
 
       const iframe = document.querySelector("#game-screen")
       iframe.src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
+
+      const fullscreen = document.querySelector("#game-fullscreen a")
+      fullscreen.href = "./game-fullscreen.html" + location.search
 
       let screenAspectRatio = 4 / 3
       const resize = () => {

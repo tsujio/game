@@ -13,7 +13,7 @@ a {
 }
 
 .navbar {
-    padding: 0.5rem 1rem 0.8rem;
+    padding: 0.8rem 1rem;
     display: flex;
     box-shadow: 0 2px 2px silver;
     background: white;
@@ -96,6 +96,11 @@ a {
     width: 100%;
     box-sizing: border-box;
     background: black;
+}
+
+#game-fullscreen {
+    text-align: right;
+    margin: 0.5rem;
 }
 
 .game-header,

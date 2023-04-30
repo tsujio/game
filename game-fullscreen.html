@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      body {
+          margin: 0px;
+          padding: 0px;
+          display: flex;
+          height: 100vh;
+      }
+
+      iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="game-screen" allow="autoplay"></iframe>
+  </body>
+
+  <script>
+    window.onload = () => {
+      const query = Object.fromEntries(location.search.substr(1,).split('&').map((kv) => kv.split('=')))
+
+      if (typeof query.title !== "string" || !query.title.match(/^[\w-]+$/)) {
+        throw new Error("title not found")
+      }
+
+      const logging = query.logging === "false" ? "false" : "true"
+
+      const iframe = document.querySelector("#game-screen")
+      iframe.src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
+
+      fetch(`https://www.tsujio.org/game-${query.title}/info.json`)
+        .then((res) => res.json())
+        .then((info) => {
+          document.title = info.title
+        })
+    }
+  </script>
+</html>
