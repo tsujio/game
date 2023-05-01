@@ -23,7 +23,10 @@
         <h1 id="game-title"></h1>
       </div>
       <div class="game-container">
-        <p id="game-fullscreen"><a href="#">Fullscreen</a></p>
+        <div class="game-control-container">
+          <span><a id="game-fullscreen" href="#">Fullscreen</a></span>
+          <span><a id="game-fullscreen-horizontal" href="#">Horizontal</a></span>
+        </div>
         <iframe id="game-screen" allow="autoplay"></iframe>
       </div>
       <div class="description-container">
@@ -54,8 +57,10 @@
       const iframe = document.querySelector("#game-screen")
       iframe.src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
 
-      const fullscreen = document.querySelector("#game-fullscreen a")
+      const fullscreen = document.querySelector("#game-fullscreen")
+      const fullscreenH = document.querySelector("#game-fullscreen-horizontal")
       fullscreen.href = "./game-fullscreen.html" + location.search
+      fullscreenH.href = "./game-fullscreen.html" + location.search + "&orientation=horizontal"
 
       let screenAspectRatio = 4 / 3
       const resize = () => {

@@ -48,7 +48,7 @@ a {
 }
 
 .arrow::before,
-.arrow::after{
+.arrow::after {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -57,24 +57,24 @@ a {
     content: "";
 }
 
-.arrow::before{
+.arrow::before {
     width: 24px;
     height: 7px;
     background: gray;
 }
 
-.arrow::after{
+.arrow::after {
     width: 16px;
     height: 16px;
     border-top: 6px solid gray;
     border-right: 6px solid gray;
 }
 
-.arrow-left::after{
+.arrow-left::after {
     transform: rotate(-135deg);
 }
 
-.arrow-right::after{
+.arrow-right::after {
     transform: rotate(45deg);
 }
 
@@ -92,15 +92,22 @@ a {
     margin: auto;
 }
 
+.game-control-container {
+    display: flex;
+    justify-content: end;
+}
+
+.game-control-container span:not(:last-of-type)::after {
+    content: "|";
+    color: gray;
+    margin: 0 0.5rem;
+}
+
 .game-container iframe {
+    margin-top: 0.5rem;
     width: 100%;
     box-sizing: border-box;
     background: black;
-}
-
-#game-fullscreen {
-    text-align: right;
-    margin: 0.5rem;
 }
 
 .game-header,
