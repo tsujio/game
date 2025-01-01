@@ -15,7 +15,6 @@
     </style>
   </head>
   <body>
-    <script src="https://storage.googleapis.com/tsujio-game-serve/wasm_exec.js"></script>
     <script>
       window.onload = () => {
         // Polyfill
@@ -50,38 +49,50 @@
 
           param.logging = String(query.logging) === "true"
 
+          if (String(query.wasm_exec).match(/^\d+\.\d+\.\d+$/)) {
+            param.wasm_exec = `wasm_exec.${query.wasm_exec}.js`
+          } else {
+            param.wasm_exec = "wasm_exec.js"
+          }
+
           return param
         })()
 
-        const getPlayerId = () => {
-          let playerId = localStorage.getItem("PLAYER_ID")
-          if (!playerId) {
-            playerId = crypto.randomUUID()
-            localStorage.setItem("PLAYER_ID", playerId)
+        const script = document.createElement("script")
+        script.setAttribute("src", `https://storage.googleapis.com/tsujio-game-serve/${param.wasm_exec}`)
+        script.onload = () => {
+          const getPlayerId = () => {
+            let playerId = localStorage.getItem("PLAYER_ID")
+            if (!playerId) {
+              playerId = crypto.randomUUID()
+              localStorage.setItem("PLAYER_ID", playerId)
+            }
+            return playerId
           }
-          return playerId
+
+          const go = new Go();
+          const url = `https://storage.googleapis.com/tsujio-game-serve/${param.title}/${param.title}${param.version}.wasm${param.compress}`
+          WebAssembly.instantiateStreaming(fetch(url), go.importObject).then(result => {
+            if (param.logging) {
+              go.env["GAME_LOGGING"] = "1"
+            }
+            try {
+              const playerId = getPlayerId()
+              go.env["GAME_PLAYER_ID"] = playerId
+            } catch (e) {
+              console.warn(e)
+            }
+
+            document.querySelector("#loading").remove()
+
+            go.run(result.instance);
+          }).catch(e => {
+            console.error(e)
+            document.querySelector("#loading").textContent = "Error"
+          });
         }
 
-        const go = new Go();
-        const url = `https://storage.googleapis.com/tsujio-game-serve/${param.title}/${param.title}${param.version}.wasm${param.compress}`
-        WebAssembly.instantiateStreaming(fetch(url), go.importObject).then(result => {
-          if (param.logging) {
-            go.env["GAME_LOGGING"] = "1"
-          }
-          try {
-            const playerId = getPlayerId()
-            go.env["GAME_PLAYER_ID"] = playerId
-          } catch (e) {
-            console.warn(e)
-          }
-
-          document.querySelector("#loading").remove()
-
-          go.run(result.instance);
-        }).catch(e => {
-          console.error(e)
-          document.querySelector("#loading").textContent = "Error"
-        });
+        document.body.appendChild(script)
       }
     </script>
 

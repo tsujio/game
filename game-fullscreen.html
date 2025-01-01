@@ -42,7 +42,6 @@
       const logging = query.logging === "false" ? "false" : "true"
 
       const iframe = document.querySelector("#game-screen")
-      iframe.src = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
 
       const container = document.querySelector("#container")
 
@@ -60,6 +59,12 @@
       fetch(`https://www.tsujio.org/game-${query.title}/info.json`)
         .then((res) => res.json())
         .then((info) => {
+          let url = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
+          if (info.wasm_exec) {
+            url += `&wasm_exec=${info.wasm_exec}`
+          }
+          iframe.src = url
+
           document.title = info.title
         })
     }
