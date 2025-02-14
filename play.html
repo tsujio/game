@@ -55,6 +55,8 @@
             param.wasm_exec = "wasm_exec.js"
           }
 
+          param.debug = String(query.debug) === "true"
+
           return param
         })()
 
@@ -75,6 +77,9 @@
           WebAssembly.instantiateStreaming(fetch(url), go.importObject).then(result => {
             if (param.logging) {
               go.env["GAME_LOGGING"] = "1"
+            }
+            if (param.debug) {
+              go.env["GAME_DEBUG"] = "1"
             }
             try {
               const playerId = getPlayerId()
