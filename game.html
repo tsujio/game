@@ -78,6 +78,9 @@
         .then((res) => res.json())
         .then((info) => {
           let url = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
+          if (query.debug === "true") {
+            url += "&debug=true"
+          }
           if (info.wasm_exec) {
             url += `&wasm_exec=${info.wasm_exec}`
           }
