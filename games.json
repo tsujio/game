@@ -53,6 +53,12 @@
       "link": "https:\/\/game.tsujio.org\/game.html?title=foucault-pendulum",
       "image": "https:\/\/github.com\/tsujio\/game-foucault-pendulum\/blob\/main\/image.gif?raw=true",
       "description": "フーコーの振り子を題材にしたゲームです。"
+    },
+    {
+      "title": "Rhinoceros",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=rhinoceros",
+      "image": "https:\/\/github.com\/tsujio\/game-rhinoceros\/blob\/main\/image.gif?raw=true",
+      "description": "サイを題材にしたゲームです。"
     }
   ]
 }
