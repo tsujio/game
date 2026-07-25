@@ -1,3 +1,6 @@
+[submodule "games/gamelib-js"]
+	path = games/gamelib-js
+	url = https://github.com/tsujio/gamelib-js
 [submodule "games/game-echolocation"]
 	path = games/game-echolocation
 	url = https://github.com/tsujio/game-echolocation
