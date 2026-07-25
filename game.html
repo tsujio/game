@@ -46,13 +46,13 @@
 
   <script>
     window.onload = () => {
-      const query = Object.fromEntries(location.search.substr(1,).split('&').map((kv) => kv.split('=')))
+      const query = new URLSearchParams(window.location.search)
 
-      if (typeof query.title !== "string" || !query.title.match(/^[\w-]+$/)) {
+      if (typeof query.get("title") !== "string" || !query.get("title").match(/^[\w-]+$/)) {
         throw new Error("title not found")
       }
 
-      const logging = query.logging === "false" ? "false" : "true"
+      const logging = query.get("logging") === "false" ? "false" : "true"
 
       const iframe = document.querySelector("#game-screen")
 
@@ -74,11 +74,18 @@
         return u.toString()
       }
 
-      fetch(`https://www.tsujio.org/game-${query.title}/info.json`)
+      fetch(`https://www.tsujio.org/game-${query.get("title")}/info.json`)
         .then((res) => res.json())
         .then((info) => {
-          let url = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
-          if (query.debug === "true") {
+          let url
+          switch (info.language) {
+            case "javascript":
+              url = `./playjs.html?title=${query.get("title")}&logging=${logging}`
+              break
+            default:
+              url = `./play.html?title=${query.get("title")}&compress=gz&logging=${logging}`
+          }
+          if (query.get("debug") === "true") {
             url += "&debug=true"
           }
           if (info.wasm_exec) {
@@ -94,7 +101,7 @@
             p.innerHTML = d
             description.appendChild(p)
           }
-          document.querySelector("#game-source").href = `https://github.com/tsujio/game-${query.title}`
+          document.querySelector("#game-source").href = `https://github.com/tsujio/game-${query.get("title")}`
           screenAspectRatio = info.screen.width / info.screen.height
           resize()
         })
@@ -107,7 +114,7 @@
         .then((data) => {
           for (let i = 0; i < data.games.length; i++) {
             const m = data.games[i].link.match(/title=([\w-]+)/)
-            if (m && m[1] === query.title) {
+            if (m && m[1] === query.get("title")) {
               const prev = document.querySelector("#link-prev")
               const next = document.querySelector("#link-next")
 

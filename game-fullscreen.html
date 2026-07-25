@@ -33,20 +33,20 @@
 
   <script>
     window.onload = () => {
-      const query = Object.fromEntries(location.search.substr(1,).split('&').map((kv) => kv.split('=')))
+      const query = new URLSearchParams(window.location.search)
 
-      if (typeof query.title !== "string" || !query.title.match(/^[\w-]+$/)) {
+      if (typeof query.get("title") !== "string" || !query.get("title").match(/^[\w-]+$/)) {
         throw new Error("title not found")
       }
 
-      const logging = query.logging === "false" ? "false" : "true"
+      const logging = query.get("logging") === "false" ? "false" : "true"
 
       const iframe = document.querySelector("#game-screen")
 
       const container = document.querySelector("#container")
 
       const resize = () => {
-        if (query.orientation === "horizontal") {
+        if (query.get("orientation") === "horizontal") {
           container.style.transform = `rotate(90deg) translateY(-${window.innerWidth}px)`
           container.style.transformOrigin = "0 0"
           container.style.height = window.innerWidth + "px"
@@ -56,10 +56,20 @@
       window.onresize = resize
       resize()
 
-      fetch(`https://www.tsujio.org/game-${query.title}/info.json`)
+      fetch(`https://www.tsujio.org/game-${query.get("title")}/info.json`)
         .then((res) => res.json())
         .then((info) => {
-          let url = `./play.html?title=${query.title}&compress=gz&logging=${logging}`
+          let url
+          switch (info.language) {
+            case "javascript":
+              url = `./playjs.html?title=${query.get("title")}&logging=${logging}`
+              break
+            default:
+              url = `./play.html?title=${query.get("title")}&compress=gz&logging=${logging}`
+          }
+          if (query.get("debug") === "true") {
+            url += "&debug=true"
+          }
           if (info.wasm_exec) {
             url += `&wasm_exec=${info.wasm_exec}`
           }
