@@ -1,0 +1,3 @@
+[submodule "games/game-echolocation"]
+	path = games/game-echolocation
+	url = https://github.com/tsujio/game-echolocation
