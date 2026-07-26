@@ -12,31 +12,36 @@
   </head>
   <body>
     <script type="module">
-      import { default as $ } from "./games/gamelib-js/gamelib.js"
+      const onLocal = window.location.hostname === "localhost"
 
-      window.onload = () => {
-        const query = new URLSearchParams(window.location.search)
+      const gamelibUrl = onLocal ? "./gamelib-js/gamelib.js" : "https://www.tsujio.org/gamelib-js/gamelib.js"
+      const { default: $ } = await import(gamelibUrl)
 
-        if (typeof query.get("title") !== "string" || !query.get("title").match(/^[\w-]+$/)) {
-          throw new Error("title not found")
-        }
+      const query = new URLSearchParams(window.location.search)
 
-        const logging = String(query.get("logging")) === "true"
-        const debug = String(query.get("debug")) === "true"
-
-        let playerId = localStorage.getItem("PLAYER_ID")
-        if (!playerId) {
-          playerId = crypto.randomUUID()
-          localStorage.setItem("PLAYER_ID", playerId)
-        }
-
-        $.play({
-          url: `./games/game-${query.get("title")}/${query.get("title")}.js`,
-          logging,
-          debug,
-          playerId,
-        })
+      if (typeof query.get("title") !== "string" || !query.get("title").match(/^[\w-]+$/)) {
+        throw new Error("title not found")
       }
+
+      const logging = String(query.get("logging")) === "true"
+      const debug = String(query.get("debug")) === "true"
+
+      let playerId = localStorage.getItem("PLAYER_ID")
+      if (!playerId) {
+        playerId = crypto.randomUUID()
+        localStorage.setItem("PLAYER_ID", playerId)
+      }
+
+      const url = onLocal ?
+        `./game-${query.get("title")}/${query.get("title")}.js` :
+        `https://www.tsujio.org/game-${query.get("title")}/${query.get("title")}.js`
+
+      $.play({
+        url,
+        logging,
+        debug,
+        playerId,
+      })
     </script>
   </body>
 </html>
