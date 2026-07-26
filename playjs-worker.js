@@ -1,5 +1,5 @@
 const params = new URLSearchParams(self.location.search);
-if (!["www.tsujio.org", "localhost"].includes(new URL(params.get("url"), self.location.href).hostname)) {
-  throw new Error;
+const url = new URL(params.get("url"), self.location.href);
+if (url.href.match(/^https:\/\/www.tsujio.org\/game-[\w-]+\/[\w-]+.js$/) || url.hostname == "localhost") {
+  await import(params.get("url"));
 }
-await import(params.get("url"));
