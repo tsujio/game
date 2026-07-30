@@ -59,6 +59,12 @@
       "link": "https:\/\/game.tsujio.org\/game.html?title=rhinoceros",
       "image": "https:\/\/github.com\/tsujio\/game-rhinoceros\/blob\/main\/image.gif?raw=true",
       "description": "サイを題材にしたゲームです。"
+    },
+    {
+      "title": "Echolocation",
+      "link": "https:\/\/game.tsujio.org\/game.html?title=echolocation",
+      "image": "https:\/\/www.tsujio.org\/game-echolocation\/image.gif",
+      "description": "エコーロケーションを題材にしたゲームです。"
     }
   ]
 }
